@@ -3,6 +3,7 @@ import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
 
 const API = axios.create({ baseURL: "https://circlify.shop/" });
+console.log("Api:",API)
 
 export const logIn = (formData) =>
   API.post("/auth/login", formData).catch((err) => {

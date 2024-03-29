@@ -4,6 +4,7 @@ import ProfileLeft from "../../components/profileLeft/ProfileLeft";
 import ProfileCard from "../../components/profileCard/ProfileCard";
 import ProfileRight from "../../components/profileRight/ProfileRight";
 
+
 import PostSide from "../../components/postSide/PostSide";
 import { MantineProvider } from "@mantine/core";
 function Profile() {

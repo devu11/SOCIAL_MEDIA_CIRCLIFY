@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import axios from "axios";
 
 
+
 function Auth() {
   const [isSignUp, setIsSingnUp] = useState(false);
   const dispatch = useDispatch();
