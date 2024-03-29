@@ -45,6 +45,10 @@ function Chat() {
     socket.current.emit("new-user-add", user._id);
     socket.current.on("get-users", (users) => {
       setOnlineUsers(users);
+      console.log("Socket connection established successfully.")
+    });
+    socket.current.on("connect_error", (error) => {
+      console.error("Socket connection error:", error);
     });
 
     socket.current.on("receive-notification", (data) => {
@@ -58,6 +62,7 @@ function Chat() {
 
     return () => {
       socket.current.disconnect();
+      console.log("Socket connection disconnected.");
     };
   }, [user]);
 
