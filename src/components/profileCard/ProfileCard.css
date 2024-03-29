@@ -1,0 +1,156 @@
+/* ProfileCard.css */
+
+.ProfileCard {
+  border-radius: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow-x: clip;
+  background: var(--cardColor);
+}
+
+.ProfileImages {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.ProfileImages > img:nth-of-type(1) {
+  width: 100%;
+}
+
+.ProfileImages > img:nth-of-type(2) {
+  width: 7rem;
+  height: 5rem;
+  border-radius: 90%;
+  position: absolute;
+  bottom: -2rem;
+  box-shadow: var(--profileShadow);
+}
+
+.ProfileName {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+  gap: 5px;
+}
+
+.ProfileName > span:nth-of-type(1) {
+  font-weight: bold;
+}
+
+.FollowStatus {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.FollowStatus > hr {
+  width: 85%;
+  border: 1px solid var(--hrColor);
+}
+
+.FollowStatus > div {
+  display: flex;
+  gap: 1rem;
+  width: 80%;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.follow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.follow > span:nth-of-type(1) {
+  font-weight: bold;
+}
+
+.follow > span:nth-of-type(2) {
+  color: var(--gray);
+  font-size: 13px;
+}
+
+.vl {
+  height: 150%;
+  border-left: 2px solid var(--hrColor);
+}
+
+.ProfileCard > span {
+  font-weight: bold;
+  color: #0095f6;
+  align-self: center;
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+
+/* Additional styling if needed */
+
+.imgcam {
+  position: absolute;
+  top: 5%;
+  left: 8%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.camera {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.cameraa {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.imgcamm {
+  border-radius: 50%;
+  position: absolute;
+  top: 32%;
+  left: 60%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+@media (max-width: 767px) {
+  .ProfileCard {
+    width: 90%;
+    padding: 1rem;
+
+      }
+
+  .ProfileImages > img:nth-of-type(2) {
+    position: relative;
+    bottom: unset;
+    /* margin-top: 2rem; */
+  }
+
+  .FollowStatus > hr {
+    width: 90%;
+  }
+
+  .FollowStatus > div {
+    width: 90%;
+    flex-wrap: wrap;
+  }
+
+  .follow {
+    width: 3%;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+}

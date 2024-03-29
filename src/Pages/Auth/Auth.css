@@ -1,0 +1,98 @@
+.Auth {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  gap: 4rem;
+  position: relative;
+}
+
+.Auth > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* left side */
+.auth-left {
+  gap: 2rem;
+}
+.auth-left > img {
+  width: 4rem;
+  height: 4rem;
+}
+.Webname > h1 {
+    margin-top: 40px;
+  font-size: 3rem;
+  background-color: rgba(16, 109, 185, 0.904);
+  background-image: var(--buttonBg);
+  background-size: 100%;
+  background-repeat: repeat;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+}
+
+
+.Webname{
+    font-size: 0.85rem;
+
+}
+.infoForm{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+}
+.infoInput{
+  border: none;
+  outline: none;
+  background-color: var(--inputColor);
+  border-radius: 8px;
+  padding: 20px;
+  flex: 1;
+}
+.infoForm>div{
+  display: flex;
+  gap: 1rem;
+  height: 2rem;
+  width: 90%;
+}
+
+.infoButton{
+  width: 6rem;
+  height: 2rem;
+  align-self: flex-end;
+}
+
+
+.authForm{
+  background-color: var(--cardColor);
+  border-radius: 1rem;
+  padding: 1rem;
+
+}
+.authForm>div{
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+.firstnametext{
+  font-size: 12px;
+  transform: translateY(-10px);
+}
+.passwordtext{
+  font-size: 12px;
+}
+.usernametext{
+  font-size: 12px;
+  transform: translateY(-10px);
+} 
+
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 8px;
+}

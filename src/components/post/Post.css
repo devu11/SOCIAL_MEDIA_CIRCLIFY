@@ -1,0 +1,125 @@
+.Post{
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    background-color: var(--cardColor);
+    border-radius: 1rem;
+    gap: 1rem;
+
+}
+.Post>img{
+    width: 100%;
+    max-height: 30rem;
+    object-fit: cover;
+    border-radius: 0.5rem;
+}
+.postReact{
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+
+}
+.edit-button{
+/* transform: translateY(-530px); */
+/* margin-left: 289px; */
+border: none;
+background:none;
+}
+.custom-swal-popup {
+    top: 250px;
+    width: 100%;
+    max-width: 500px;
+    height: 300px;
+    border-radius: 30px;
+    background-color: rgba(219, 101, 27, 0.447);
+    color: black;
+}
+
+
+.small-title {
+    font-size: 18px; 
+    color: black;
+}
+.small-input {
+color: black;
+    width: 200px;
+   height: 30px;
+}
+.swal2-input.small-input {
+    height: 30px; 
+    font-size: 14px; 
+}
+
+
+.swal2-file.small-input {
+    height: 10px;
+    font-size: 10px; 
+}
+.custom-swal-popup {
+    margin-top: 10px; /* Adjust this value to your desired distance from the top */
+}
+
+.custom-swal-content {
+    margin-top: 10px; /* Adjust this value to increase or decrease the space between title and input */
+}
+.custom-swal-popup {
+    background-color: #f0f0f0; /* Change background color */
+}
+
+.custom-swal-content {
+    font-size: 10px; /* Adjust font size of comment text */
+}
+
+.swal2-comment-by {
+    color: gray; /* Change color of comment by text */
+}
+
+.custom-swal-confirm-button {
+    background-color: #3085d6; /* Change background color of confirm button */
+    color: white; 
+}
+
+
+.comment {
+    margin-bottom: 10px;
+ 
+}
+
+.comment p {
+    margin: 0;
+    font-size: 12px; 
+
+}
+
+.comment b {
+    font-weight:700;
+}
+.comments h3 {
+    font-size: 14px; 
+   
+}
+.deleteBtn{
+    border: none;
+    background: none;
+    margin-left: 290px;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center; 
+    margin-bottom: 5px; 
+  }
+  
+  .profile-picture {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+  }
+  
+  .username {
+    margin-bottom: 0;
+    font-weight: bold; 
+  }
+  

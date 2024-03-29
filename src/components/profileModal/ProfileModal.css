@@ -1,0 +1,43 @@
+.custom-modal {
+    position: fixed;
+    z-index: 9999999;
+    top: 46%;
+    left: 20%;
+    /* transform: translate(-50%, -50%); */
+   size: 10px;
+  }
+  .infoForm1 h3{
+    font-size: 14px;
+  }
+/*   
+  .infoForm1 {
+    display: grid;
+    grid-template-rows: repeat(auto-fill, minmax(40px, 1fr)); 
+    background: rgba(237, 232, 232, 0.984);
+    width: 240px;
+    gap: 6px;
+    padding: 20px;
+    
+  } */
+  
+  /* .infoInput1 {
+    width: 130px;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-bottom: 10px;
+  } */
+  
+  .UserProfileImg {
+    margin-top: 8px;
+    font-size: 12px;
+  }
+  
+
+  .infoButton {
+    margin-top: 5px;
+    margin-right: 100px;
+  }
+  

@@ -1,0 +1,26 @@
+.profile{
+    position: relative;
+    display: grid;
+    grid-template-columns: 18rem auto 17rem;
+    gap: 1rem;
+}
+.Profile-center{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    
+}
+@media (max-width: 768px) {
+    /* Adjust grid layout for smaller screens */
+    .profile {
+      grid-template-columns: auto; /* Single column layout */
+    }
+  
+    .Profile-center {
+      order: 3; /* Move ProfileCenter below ProfileLeft and ProfileRight */
+    }
+  
+    .ProfileRight {
+      order: 2; /* Move ProfileRight after ProfileLeft */
+    }
+  }

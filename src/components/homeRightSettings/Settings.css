@@ -1,0 +1,23 @@
+.settings-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    border: 0 solid #841010;
+    padding: 10px;
+    margin-right: 10px;
+    border-radius: 23px;
+    width: 250px;
+    height: 250px;
+    background: rgba(255, 255, 255, 0.288);
+    margin-top: 20px;
+  }
+  
+  .setting-item {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .setting-item svg {
+    margin-right: 30px; /* Adding space between icon and text */
+  }  
