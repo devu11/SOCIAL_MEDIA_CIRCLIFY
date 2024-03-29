@@ -1,15 +1,15 @@
 import * as PostApi from "../api/PostRequest.js"
 
 
-// Example action creator for loading timeline posts asynchronously using redux-thunk
+
 export const getTimelinePosts = (userId) => async (dispatch) => {
-  dispatch({ type: "RETREIVING_START" }); // Dispatching a plain object action
+  dispatch({ type: "RETREIVING_START" }); 
   try {
-    const { data } = await PostApi.getTimelinePosts(userId); // Make sure PostApi.getTimelinePosts returns a Promise
-    dispatch({ type: "RETREIVING_SUCCESS", data: data }); // Dispatching a plain object action
+    const { data } = await PostApi.getTimelinePosts(userId);
+    dispatch({ type: "RETREIVING_SUCCESS", data: data });
   } catch (error) {
-    dispatch({ type: "RETREIVING_FAIL" }); // Dispatching a plain object action
-    console.error("Error fetching timeline posts:", error); // Use console.error for better error logging
+    dispatch({ type: "RETREIVING_FAIL" }); 
+    console.error("Error fetching timeline posts:", error);
   }
 };
 

@@ -8,47 +8,50 @@ import { BsFillMicMuteFill, BsCameraVideoOffFill } from "react-icons/bs";
 import Peer from "peerjs";
 
 function ChatBox({
-  chat,
-  currentUser,
-  selectedUser,
-  setSendMessage,
-  receiveMessage,
-  userData,
+ chat,
+ currentUser,
+ selectedUser,
+ setSendMessage,
+ receiveMessage,
+ userData,
 }) {
-  const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState("");
-  const [peer, setPeer] = useState(null);
-  const [call, setCall] = useState(null);
-  const [callState, setCallState] = useState("idle");
-  const [showMuteIcons, setShowMuteIcons] = useState(false);
-  const localVidRef = useRef();
-  const remoteVidRef = useRef();
-  const scroll = useRef();
+ const [messages, setMessages] = useState([]);
+ const [newMessage, setNewMessage] = useState("");
+ const [peer, setPeer] = useState(null);
+ const [call, setCall] = useState(null);
+ const [callState, setCallState] = useState("idle");
+ const [showMuteIcons, setShowMuteIcons] = useState(false); // State to control visibility of mute icons
+ const localVidRef = useRef();
+ const remoteVidRef = useRef();
+ const scroll = useRef();
 
-  useEffect(() => {
-    const fetchMessages = async () => {
-      try {
-        const { data } = await getMessages(chat._id);
-        setMessages(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    if (chat !== null) fetchMessages();
-  }, [chat]);
+ useEffect(() => {
+  const fetchMessages = async () => {
+     try {
+       const { data } = await getMessages(chat._id);
+       setMessages(data);
+     } catch (error) {
+       console.error("Error fetching messages:", error);
+     }
+  };
+ 
+  if (chat) {
+     fetchMessages();
+  }
+ }, [chat, getMessages]);
 
-  useEffect(() => {
+ useEffect(() => {
     if (receiveMessage) {
       setMessages((prevMessages) => [...prevMessages, receiveMessage]);
       scroll.current?.scrollIntoView({ behavior: "smooth" });
     }
-  }, [receiveMessage]);
+ }, [receiveMessage]);
 
-  const handleChange = (newMessage) => {
+ const handleChange = (newMessage) => {
     setNewMessage(newMessage);
-  };
+ };
 
-  const handleSend = async (e) => {
+ const handleSend = async (e) => {
     e.preventDefault();
 
     const message = {
@@ -68,16 +71,16 @@ function ChatBox({
     }
 
     setSendMessage(message);
-  };
+ };
 
-  useEffect(() => {
+ useEffect(() => {
     scroll.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+ }, [messages]);
 
-  useEffect(() => {
+ useEffect(() => {
     const peer = new Peer(undefined, {
       host: "/",
-      port: "3002",
+      port: "3001",
     });
 
     setPeer(peer);
@@ -100,9 +103,9 @@ function ChatBox({
     return () => {
       peer.destroy();
     };
-  }, []);
+ }, []);
 
-   const startCall = async () => {
+ const startCall = async () => {
     try {
       const localStream = await navigator.mediaDevices.getUserMedia({
         video: true,
@@ -133,25 +136,25 @@ function ChatBox({
     }
  };
 
-  const toggleAudio = () => {
+ const toggleAudio = () => {
     if (window.localStream) {
       const audioTracks = window.localStream.getAudioTracks();
       if (audioTracks.length > 0) {
         audioTracks[0].enabled = !audioTracks[0].enabled;
       }
     }
-  };
+ };
 
-  const toggleVideo = () => {
+ const toggleVideo = () => {
     if (window.localStream) {
       const videoTracks = window.localStream.getVideoTracks();
       if (videoTracks.length > 0) {
         videoTracks[0].enabled = !videoTracks[0].enabled;
       }
     }
-  };
+ };
 
-  return (
+ return (
     <div className="ChatBox-container">
       {chat ? (
         <>
@@ -159,7 +162,7 @@ function ChatBox({
             {userData ? (
               <div className="follower">
                 <div className="pro">
-                  <img
+                 <img
                     src={
                       userData.profilePicture
                         ? process.env.REACT_APP_PUBLIC_FOLDER +
@@ -170,54 +173,61 @@ function ChatBox({
                     alt=""
                     className="followerImage"
                     style={{ width: "50px", height: "50px" }}
-                  />
-                  <div className="name1" style={{ fontSize: "0.8rem" }}>
+                 />
+                 <div className="name1" style={{ fontSize: "0.8rem" }}>
                     <span>
                       {userData.firstname} {userData.lastname}
                     </span>
-                  </div>
-                  <div className="videoCall">
+                 </div>
+                 <div className="videoCall">
                     <FcVideoCall
-                      onClick={startCall}
+                      onClick={() => {
+                        startCall(); // Start the call
+                        setShowMuteIcons(true); // Show mute icons
+                      }}
                       style={{ fontSize: "50px", cursor: "pointer" }}
                     />
                     {callState === "calling" && <div>Calling...</div>}
-                  </div>
-                  <video
+                 </div>
+                 <video
                     ref={localVidRef}
                     autoPlay
                     playsInline
                     muted
                     style={{ width: "400px", height: "400px" }}
-                  />
-                  <video
+                 />
+                 <video
                     ref={remoteVidRef}
                     autoPlay
                     playsInline
                     style={{ width: "300px", height: "300px" }}
-                  />
+                 />
 
-                  <BsFillMicMuteFill
-                    onClick={toggleAudio}
-                    style={{
-                      position: "absolute",
-                      bottom: "100px",
-                      left: "500px",
-                      color:"red"
-                    }}
-                    className="video-control-button"
-                  />
+                 {showMuteIcons && ( // Only show mute icons if showMuteIcons is true
+                    <>
+                      <BsFillMicMuteFill
+                        onClick={toggleAudio}
+                        style={{
+                          position: "absolute",
+                          bottom: "100px",
+                          left: "500px",
+                          color:"red"
+                        }}
+                        className="video-control-button"
+                      />
 
-                  <BsCameraVideoOffFill
-                    onClick={toggleVideo}
-                    style={{
-                      position: "absolute",
-                      bottom: "100px",
-                      right: "750px",
-                      color:"red"
-                    }}
-                    className="video-control-button"
-                  />
+                      <BsCameraVideoOffFill
+                        onClick={toggleVideo}
+                        style={{
+                          position: "absolute",
+                          bottom: "100px",
+                          right: "750px",
+                          color:"red"
+                        }}
+                        className="video-control-button"
+                      />
+                    </>
+                 )}
                 </div>
               </div>
             ) : (
@@ -230,7 +240,7 @@ function ChatBox({
                 key={index}
                 ref={scroll}
                 className={
-                  message.senderId === currentUser ? "message own" : "message"
+                 message.senderId === currentUser ? "message own" : "message"
                 }
               >
                 <span>{message.text}</span>
@@ -252,7 +262,7 @@ function ChatBox({
         </span>
       )}
     </div>
-  );
+ );
 }
 
 export default ChatBox;
