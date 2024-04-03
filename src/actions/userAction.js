@@ -27,3 +27,14 @@ export const unFollowUser = (id, data) => async (dispatch) => {
     console.log("Error unfollowing user:", error);
   }
 };
+
+export const updateUserPrivacy = (isPrivate) => async (dispatch) => {
+  dispatch({ type: "UPDATING_PRIVACY_START" });
+  try {
+    const id = localStorage.getItem('profile') ? JSON.parse(localStorage.getItem('profile')).user._id : null;
+    const { data } = await UserApi.updateUserPrivacy(id, { isPrivate });
+    dispatch({ type: "UPDATING_PRIVACY_SUCCESS", data });
+  } catch (error) {
+    dispatch({ type: "UPDATING_PRIVACY_FAIL" });
+  }
+};

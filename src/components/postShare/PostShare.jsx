@@ -117,6 +117,10 @@ function PostShare() {
     }
  };
 
+ 
+ 
+ const videoContainerClass = "video-container";
+
  return (
     <div className="PostShare">
       <img
@@ -132,7 +136,7 @@ function PostShare() {
           type="text"
           ref={desc}
           required
-          placeholder="Post Description...."
+          placeholder="Write Something..."
         />
 
         <div className="postOptions">
@@ -181,9 +185,9 @@ function PostShare() {
 
         {showImagePreview && images.length > 0 && ( 
           <div className="imagePreview">
-            <FaLessThan onClick={handlePrevImage} />
-            <img src={URL.createObjectURL(images[currentImageIndex])} alt="" />
-            <FaGreaterThan onClick={handleNextImage} />
+        
+            <img src={URL.createObjectURL(images[currentImageIndex])} alt=""  className="imagePreviewClass" />
+            
           </div>
         )}
 
@@ -191,7 +195,9 @@ function PostShare() {
         {video && (
           <div className="previewVideo">
             <UilTimes onClick={() => setVideo(null)} />
-            <video src={URL.createObjectURL(video)} alt="" controls />
+            <div className={videoContainerClass}>
+            <video src={URL.createObjectURL(video)} alt="" controls  />
+          </div>
           </div>
         )}
 

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = axios.create({ baseURL: "https://circlify.shop/" });
+const API = axios.create({ baseURL: "http://localhost:3001" });
 
 export const getTimelinePosts = (id) => API.get(`/post/${id}/timeline`);
 

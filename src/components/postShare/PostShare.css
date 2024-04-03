@@ -70,3 +70,23 @@
     border-radius: 0.5rem;
 
 }
+.imagePreviewClass {
+    width: 400px; 
+    height: 300px; 
+    object-fit: cover; 
+    border-radius: 5px; 
+   }
+
+   .video-container {
+    width: 400px; 
+    height: 300px;
+    overflow: hidden; 
+    border-radius: 5px; 
+   }
+   
+   .video-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* This will ensure the video covers the area without distorting its aspect ratio */
+   }
+   

@@ -14,10 +14,6 @@ export const getTimelinePosts = (userId) => async (dispatch) => {
 };
 
 
-
-
-
-
 export const updatePost = (updatedPost) => async (dispatch) => {
   dispatch({ type: "UPDATE_POST_REQUEST" });
   try {

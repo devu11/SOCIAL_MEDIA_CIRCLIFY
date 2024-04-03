@@ -3,11 +3,12 @@ import "./Auth.css";
 import Logo from "../../img/logo.png";
 import { GoogleLogin } from "react-google-login";
 import { useDispatch, useSelector } from "react-redux";
-import { logIn, signUp } from "../../actions/AuthAction";
+import { logIn, signUp,initiateForgotPassword,resetPassword} from "../../actions/AuthAction";
+import { verifyOTP } from "../../api/AuthRequest";
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
 import axios from "axios";
-
+import ForgotPasswordModal from "../../components/ForgotPasswordModal/ForgotPasswordModal "
 
 
 function Auth() {
@@ -15,7 +16,6 @@ function Auth() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loginError, setLoginError] = useState(null);
-
   const loading = useSelector((state) => state.authReducer.loading);
   console.log(loading);
   const [data, setData] = useState({
@@ -25,10 +25,22 @@ function Auth() {
     password: "",
     confirmpass: "",
   });
-
+  
+  const [forgotPasswordModalOpen, setForgotPasswordModalOpen] = useState(false);
   const [confirmPass, setConfirmPass] = useState(true);
 
   const [errors, setErrors] = useState({});
+
+
+  const handleForgotPassword = () => {
+    setForgotPasswordModalOpen(true);
+  };
+
+  const handleCloseForgotPasswordModal = () => {
+    setForgotPasswordModalOpen(false);
+  };
+
+
 
   const handleChange = (e) => {
     // no need to make handle change for every inputs
@@ -86,6 +98,7 @@ function Auth() {
     return /\d/.test(text);
   };
 
+  
   const handlesubmit = async (e) => {
     e.preventDefault();
    
@@ -283,7 +296,7 @@ function Auth() {
                 : "Dont have account? SignUp"}
             </span>
           </div>
-
+        <p style={{color:"red"}} className="forgot-password-link" onClick={handleForgotPassword}>Forgot Password?</p>
           <button
             className="button infoButton"
             type="submit"
@@ -323,8 +336,13 @@ function Auth() {
 
         </form>
       </div>
+      <ForgotPasswordModal
+        open={forgotPasswordModalOpen}
+        onClose={handleCloseForgotPasswordModal}
+      />
     </div>
   );
 }
 
 export default Auth;
+

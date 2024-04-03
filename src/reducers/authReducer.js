@@ -46,6 +46,18 @@ case "UPDATING_FAIL":
           },
         },
       };
+
+      case "UPDATING_PRIVACY_SUCCESS":
+      localStorage.setItem("profile", JSON.stringify({ ...action?.data }));
+      return { ...state, authData: action.data, loading: false, error: false, blocked: action.data.blocked  };
+    
+      case "AUTH_SUCCESS_RESTART":
+    localStorage.setItem("profile", JSON.stringify({ ...action?.data }));
+    return { ...state, authData: action.data, loading: false, error: false };
+
+case "AUTH_FAIL_RESTART":
+    return { ...state, loading: false, error: true };
+
       
     case "LOG_OUT":
       localStorage.clear();

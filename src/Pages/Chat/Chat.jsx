@@ -1,3 +1,4 @@
+// Chat.js
 import React, { useEffect, useRef, useState } from "react";
 import "./Chat.css";
 import LogoSearch from "../../components/logoSearch/LogoSearch";
@@ -36,44 +37,37 @@ function Chat() {
     fetchFollowedUsers();
   }, [user._id]);
 
-  useEffect(() => {
-    const storedNotifications =
-      JSON.parse(localStorage.getItem("notifications")) || [];
-    setNotifications(storedNotifications);
+  
 
-    socket.current = io("https://circlify-theta.vercel.app");
-    socket.current.emit("new-user-add", user._id);
-    socket.current.on("get-users", (users) => {
-      setOnlineUsers(users);
-      console.log("Socket connection established successfully.")
-    });
-    socket.current.on("connect_error", (error) => {
-      console.error("Socket connection error:", error);
-    });
-
-    socket.current.on("receive-notification", (data) => {
-      const updatedNotifications = [...notifications, data.message];
-      setNotifications(updatedNotifications);
-      localStorage.setItem(
-        "notifications",
-        JSON.stringify(updatedNotifications)
-      );
-    });
-
-    return () => {
-      socket.current.disconnect();
-      console.log("Socket connection disconnected.");
-    };
-  }, [user]);
-
+useEffect(() => {
+  const storedNotifications = JSON.parse(localStorage.getItem('notifications')) || [];
+  setNotifications(storedNotifications);
+ 
+  socket.current = io("http://localhost:3001");
+  socket.current.emit("new-user-add", user._id);
+  socket.current.on("get-users", (users) => {
+     setOnlineUsers(users);
+  });
+ 
+  socket.current.on("receive-notification", (data) => {
+     const updatedNotifications = [...notifications, data.message];
+     setNotifications(updatedNotifications);
+     localStorage.setItem('notifications', JSON.stringify(updatedNotifications));
+  });
+ 
+  return () => {
+     socket.current.disconnect();
+  };
+ }, [user]);
+ 
   useEffect(() => {
     socket.current.on("receive-message", (data) => {
-      const storedMessages = JSON.parse(localStorage.getItem("receivedMessages")) || [];
-      localStorage.setItem("receivedMessages", JSON.stringify([...storedMessages, data]));
       setReceiveMessage(data);
     });
   }, []);
-
+  
+   
+   
   useEffect(() => {
     const getChats = async () => {
       try {
@@ -86,7 +80,7 @@ function Chat() {
     getChats();
   }, [user]);
 
-  const handleSendMessage = (message) => {
+   const handleSendMessage = (message) => {
     socket.current.emit("send-message", message);
   };
 
@@ -94,12 +88,25 @@ function Chat() {
     <div className="Chat">
       <div className="Left-side-chat">
         <LogoSearch />
-
+        {/* <div className="notifications">
+          <ul>
+          {notifications.map((notification, index) => (
+    <div key={index} className="notification">
+      {notification}
+    </div>
+  ))}
+          </ul>
+       
+        </div> */}
+       
         <div className="Chat-container">
           <h2>Chats</h2>
           <div className="Chat-list">
             {followedUsers.map((user) => (
-              <div onClick={() => setCurrentChat(user)} key={user._id}>
+              <div
+                onClick={() => setCurrentChat(user)}
+                key={user._id}
+              >
                 <Conversation
                   data={user}
                   currentUserId={user._id}
@@ -108,7 +115,10 @@ function Chat() {
               </div>
             ))}
             {chats.map((chat) => (
-              <div onClick={() => setCurrentChat(chat)} key={chat._id}>
+              <div
+                onClick={() => setCurrentChat(chat)}
+                key={chat._id}
+              >
                 <Conversation
                   data={chat}
                   currentUserId={user._id}
@@ -135,7 +145,7 @@ function Chat() {
         <ChatBox
           chat={currentChat}
           currentUser={user._id}
-          selectedUser={currentChat}
+          selectedUser={currentChat} // Pass selected user to ChatBox
           setSendMessage={handleSendMessage}
           receiveMessage={receiveMessage}
           userData={currentChat}

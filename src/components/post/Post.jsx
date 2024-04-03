@@ -168,6 +168,8 @@ function Post({ data, id, onDelete }) {
   } 
 
 
+  
+
   return (
     <div className="Post">
  {console.log("Data:", data)}

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = axios.create({baseURL:"https://circlify.shop/"})
+const API = axios.create({baseURL:"http://localhost:3001"})
 
 
 API.interceptors.request.use(async (config) => {
@@ -12,6 +12,8 @@ API.interceptors.request.use(async (config) => {
        
        const userRole = localStorage.getItem('profile') ? JSON.parse(localStorage.getItem('profile')).role : null;
        if (userRole) {
+
+         //  Allowing  access to admin routes only if the user is an admin
 
          if (config.url.startsWith('/admin') && userRole !== 'admin') {
            throw new Error('Unauthorized');
@@ -36,3 +38,15 @@ export const followUser =(id,data)=> API.put(`/user/${id}/follow`, data)
 export const unFollowUser =(id,data)=> API.put(`/user/${id}/unfollow`, data)
 
 export const getFollowedUsers = (userId) => API.get(`/user/${userId}/followedUsers`);
+
+export const getUsersBySearchQuery = async (query) => {
+  try {
+     const response = await API.get('/user', { params: { searchQuery: query } });
+     return response.data; 
+  } catch (error) {
+     console.error("Error fetching users:", error);
+     return []; 
+  }
+ };
+ 
+ export const updateUserPrivacy = (id, data) => API.put(`/user/${id}/privacy`, data);

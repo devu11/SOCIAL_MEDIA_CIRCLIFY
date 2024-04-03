@@ -13,7 +13,7 @@ function FollowersModal({  onClose }) {
     const storedNotifications = JSON.parse(localStorage.getItem('notifications')) || [];
     setNotifications(storedNotifications);
 
-    socket.current = io("https://circlify-theta.vercel.app");
+    socket.current = io("https://circlify-theta.vercel.app/");
     socket.current.emit("new-user-add", user._id);
     socket.current.on("get-users", (users) => {
       
