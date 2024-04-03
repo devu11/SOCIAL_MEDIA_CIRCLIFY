@@ -43,7 +43,7 @@ useEffect(() => {
   const storedNotifications = JSON.parse(localStorage.getItem('notifications')) || [];
   setNotifications(storedNotifications);
  
-  socket.current = io("http://localhost:3001");
+  socket.current = io("https://circlify.shop");
   socket.current.emit("new-user-add", user._id);
   socket.current.on("get-users", (users) => {
      setOnlineUsers(users);

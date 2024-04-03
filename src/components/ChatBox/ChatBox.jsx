@@ -80,7 +80,7 @@ function ChatBox({
  useEffect(() => {
     const peer = new Peer(undefined, {
       host: "/",
-      port: "3001",
+      port: "https://circlify.shop",
     });
 
     setPeer(peer);
