@@ -5,8 +5,6 @@ import "./PostShare.css";
 import {
  UilScenery,
  UilPlayCircle,
- UilLocationPoint,
- UilSchedule,
  UilTimes,
 } from "@iconscout/react-unicons";
 import Swal from 'sweetalert2';
@@ -155,14 +153,14 @@ function PostShare() {
             <UilPlayCircle />
             Video
           </div>
-          <div className="options" style={{ color: "var(--location)" }}>
+          {/* <div className="options" style={{ color: "var(--location)" }}>
             <UilLocationPoint />
             Location
           </div>
           <div className="options" style={{ color: "var(--schedule)" }}>
             <UilSchedule />
             Schedule
-          </div>
+          </div> */}
           
           <button className="button ps-button" onClick={handlesubmit}>{loading ? "Uploading..." : "Share"}</button>
           <div style={{ display: "none" }}>
