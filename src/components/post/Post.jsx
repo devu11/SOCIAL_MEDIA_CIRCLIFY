@@ -172,7 +172,7 @@ function Post({ data, id, onDelete }) {
   return (
     <div className="Post">
  {console.log("Data:", data)}
-<div className="user-profile">
+{/* <div className="user-profile">
         <img
           src={
            user.profilePicture
@@ -183,7 +183,7 @@ function Post({ data, id, onDelete }) {
           className="profile-picture"
         />
         <span className="username">{user.username}</span>
-      </div>
+      </div> */}
 
       <img
         src={data.image ? process.env.REACT_APP_PUBLIC_FOLDER + data.image : ""}
