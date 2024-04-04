@@ -17,7 +17,7 @@ function ProfileRight(){
 
     return(
         <div className="RightSide">
-  <div className="navIcons">
+  {/* <div className="navIcons">
     <Link to='../home'>
     <img src={Home1} alt="Home" />
     </Link>
@@ -31,7 +31,7 @@ function ProfileRight(){
     </Link>
     
 
-  </div>
+  </div> */}
 {/* <TrendCard/> */}
 <FollowersCard/>
 <button className="button r-button" onClick={()=> setModalOpened(true)}>
