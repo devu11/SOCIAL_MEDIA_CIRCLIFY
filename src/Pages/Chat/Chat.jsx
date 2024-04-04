@@ -55,30 +55,18 @@ useEffect(() => {
      localStorage.setItem('notifications', JSON.stringify(updatedNotifications));
   });
  
-  socket.current.on("receive-message", (data) => {
-    // Save received messages to localStorage
-    const storedMessages = JSON.parse(localStorage.getItem('receivedMessages')) || [];
-    const updatedMessages = [...storedMessages, data];
-    localStorage.setItem('receivedMessages', JSON.stringify(updatedMessages));
-    setReceiveMessage(data);
-  });
-
+  
   return () => {
      socket.current.disconnect();
   };
  }, [user]);
  
-  // useEffect(() => {
-  //   socket.current.on("receive-message", (data) => {
-  //     setReceiveMessage(data);
-  //   });
-  // }, []);
-  
   useEffect(() => {
-    // Retrieve received messages from localStorage
-    const storedMessages = JSON.parse(localStorage.getItem('receivedMessages')) || [];
-    setReceiveMessage(storedMessages);
+    socket.current.on("receive-message", (data) => {
+      setReceiveMessage(data);
+    });
   }, []);
+  
    
    
   useEffect(() => {
