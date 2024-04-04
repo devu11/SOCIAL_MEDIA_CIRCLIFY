@@ -167,7 +167,6 @@ function Post({ data, id, onDelete }) {
     return null;
   } 
 
-
   
 
   return (

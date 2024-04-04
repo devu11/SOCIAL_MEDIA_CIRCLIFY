@@ -26,13 +26,25 @@ function ChatBox({
  const scroll = useRef();
  
 
- 
+ const loadMessagesFromLocalStorage = () => {
+  const storedMessages = localStorage.getItem(`chat_messages_${chat._id}`);
+  if (storedMessages) {
+    setMessages(JSON.parse(storedMessages));
+  }
+};
+
+const saveMessagesToLocalStorage = (messages) => {
+  localStorage.setItem(`chat_messages_${chat._id}`, JSON.stringify(messages));
+};
+
+
 
  useEffect(() => {
   const fetchMessages = async () => {
      try {
        const { data } = await getMessages(chat._id);
        setMessages(data);
+       saveMessagesToLocalStorage(data);
      } catch (error) {
        console.error("Error fetching messages:", error);
      }
@@ -40,12 +52,14 @@ function ChatBox({
  
   if (chat) {
      fetchMessages();
+     loadMessagesFromLocalStorage();
   }
  }, [chat, getMessages]);
 
  useEffect(() => {
     if (receiveMessage) {
       setMessages((prevMessages) => [...prevMessages, receiveMessage]);
+      saveMessagesToLocalStorage([...messages, receiveMessage]);
       scroll.current?.scrollIntoView({ behavior: "smooth" });
     }
  }, [receiveMessage]);
