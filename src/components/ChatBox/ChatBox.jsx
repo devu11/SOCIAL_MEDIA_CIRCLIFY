@@ -58,11 +58,14 @@ function ChatBox({
  }, [chat, getMessages]);
 
  useEffect(() => {
-    if (receiveMessage) {
-      setMessages((prevMessages) => [...prevMessages, receiveMessage]);
-      scroll.current?.scrollIntoView({ behavior: "smooth" });
-    }
- }, [receiveMessage]);
+  if (receiveMessage && chat) {
+     setMessages((prevMessages) => [...prevMessages, receiveMessage]);
+     // Also update local storage with the new message
+     const updatedMessages = [...messages, receiveMessage];
+     localStorage.setItem(`messages-${chat._id}`, JSON.stringify(updatedMessages));
+     scroll.current?.scrollIntoView({ behavior: "smooth" });
+  }
+ }, [receiveMessage, chat, messages]);
 
  const handleChange = (newMessage) => {
     setNewMessage(newMessage);
