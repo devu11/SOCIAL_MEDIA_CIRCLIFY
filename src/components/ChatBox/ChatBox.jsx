@@ -26,46 +26,29 @@ function ChatBox({
  const scroll = useRef();
  
 
- useEffect(() => {
-  if (chat) { 
-     const storedMessages = JSON.parse(localStorage.getItem(`messages-${chat._id}`)) || [];
-     setMessages(storedMessages);
-  }
- }, [chat]);
  
+
+ useEffect(() => {
+  const fetchMessages = async () => {
+     try {
+       const { data } = await getMessages(chat._id);
+       setMessages(data);
+     } catch (error) {
+       console.error("Error fetching messages:", error);
+     }
+  };
  
- useEffect(() => {
-  if (chat) { 
-     localStorage.setItem(`messages-${chat._id}`, JSON.stringify(messages));
-  }
- }, [messages, chat]);
-
-
-
-
- useEffect(() => {
-  if (chat) { // Add this check
-     const fetchMessages = async () => {
-         try {
-           const { data } = await getMessages(chat._id);
-           setMessages(data);
-         } catch (error) {
-           console.error("Error fetching messages:", error);
-         }
-     };
+  if (chat) {
      fetchMessages();
   }
  }, [chat, getMessages]);
 
  useEffect(() => {
-  if (receiveMessage && chat) {
-     setMessages((prevMessages) => [...prevMessages, receiveMessage]);
-     // Also update local storage with the new message
-     const updatedMessages = [...messages, receiveMessage];
-     localStorage.setItem(`messages-${chat._id}`, JSON.stringify(updatedMessages));
-     scroll.current?.scrollIntoView({ behavior: "smooth" });
-  }
- }, [receiveMessage, chat, messages]);
+    if (receiveMessage) {
+      setMessages((prevMessages) => [...prevMessages, receiveMessage]);
+      scroll.current?.scrollIntoView({ behavior: "smooth" });
+    }
+ }, [receiveMessage]);
 
  const handleChange = (newMessage) => {
     setNewMessage(newMessage);
