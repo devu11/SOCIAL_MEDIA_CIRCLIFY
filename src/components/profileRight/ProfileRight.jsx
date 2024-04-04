@@ -22,7 +22,10 @@ function ProfileRight(){
     <img src={Home1} alt="Home" />
     </Link>
     <UilSetting/>
+    <Link>
     <img src={Notification} alt="Notifications" />
+    </Link>
+    
     <Link to='../chat'>
     <img src={Comment} alt="Comment" />
     </Link>
