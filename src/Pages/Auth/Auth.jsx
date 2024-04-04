@@ -129,7 +129,7 @@ function Auth() {
   const handleGoogleSignInSuccess = async (googleData) => {
     try {
       const tokenId = googleData.tokenId;
-      const response = await axios.post("https://circlify.shop/auth/googleSignIn", { tokenId });
+      const response = await axios.post("http://localhost:3001/auth/googleSignIn", { tokenId });
       console.log(response.data);
       navigate("/home");
       Swal.fire({
