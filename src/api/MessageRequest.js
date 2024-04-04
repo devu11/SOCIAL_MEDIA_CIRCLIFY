@@ -1,5 +1,5 @@
 import axios from 'axios';
-const API = axios.create({baseURL: "http://circlify.shop"})
+const API = axios.create({baseURL: "https://circlify.shop"})
 
 export const getMessages =(id)=> API.get(`/message/${id}`)
 

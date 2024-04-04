@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = axios.create({baseURL: "http://circlify.shop"});
+const API = axios.create({baseURL: "https://circlify.shop"});
 
 export const adminLogIn = (formData)=> API.post('/adminLogin',formData);
 
