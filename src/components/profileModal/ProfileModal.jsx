@@ -172,7 +172,7 @@ try {
             Cover Image
             <input type="file" name="coverImage" onChange={onImageChange}/>
           </div>
-          <button className="button-infoButton"  onClick={handleSubmit} >Update
+          <button className="button infoButton"  onClick={handleSubmit} >Update
           </button>
         </form>
      

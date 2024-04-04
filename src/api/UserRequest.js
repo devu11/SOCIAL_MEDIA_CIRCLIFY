@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = axios.create({baseURL:"http://localhost:3001"})
+const API = axios.create({baseURL:"http://circlify.shop"})
 
 
 API.interceptors.request.use(async (config) => {
