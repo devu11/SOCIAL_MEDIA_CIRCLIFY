@@ -2,7 +2,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
 
-const API = axios.create({ baseURL: "http://localhost:3001" });
+const API = axios.create({ baseURL: "https://circlify.shop" });
 
 export const logIn = (formData) =>
   API.post("/auth/login", formData)
