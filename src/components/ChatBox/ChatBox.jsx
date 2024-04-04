@@ -20,22 +20,39 @@ function ChatBox({
  const [peer, setPeer] = useState(null);
  const [call, setCall] = useState(null);
  const [callState, setCallState] = useState("idle");
- const [showMuteIcons, setShowMuteIcons] = useState(false); // State to control visibility of mute icons
+ const [showMuteIcons, setShowMuteIcons] = useState(false); 
  const localVidRef = useRef();
  const remoteVidRef = useRef();
  const scroll = useRef();
+ 
 
  useEffect(() => {
-  const fetchMessages = async () => {
-     try {
-       const { data } = await getMessages(chat._id);
-       setMessages(data);
-     } catch (error) {
-       console.error("Error fetching messages:", error);
-     }
-  };
+  if (chat) { 
+     const storedMessages = JSON.parse(localStorage.getItem(`messages-${chat._id}`)) || [];
+     setMessages(storedMessages);
+  }
+ }, [chat]);
  
-  if (chat) {
+ 
+ useEffect(() => {
+  if (chat) { 
+     localStorage.setItem(`messages-${chat._id}`, JSON.stringify(messages));
+  }
+ }, [messages, chat]);
+
+
+
+
+ useEffect(() => {
+  if (chat) { // Add this check
+     const fetchMessages = async () => {
+         try {
+           const { data } = await getMessages(chat._id);
+           setMessages(data);
+         } catch (error) {
+           console.error("Error fetching messages:", error);
+         }
+     };
      fetchMessages();
   }
  }, [chat, getMessages]);
