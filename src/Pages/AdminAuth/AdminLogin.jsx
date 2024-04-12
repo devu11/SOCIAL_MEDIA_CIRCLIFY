@@ -114,7 +114,7 @@ function AdminLogin() {
 
         </div>
         <div style={{ marginTop: "20px" }}>
-        <button type="submit" className="button infoButton" >
+        <button type="submit" className="button-admin" >
          Log In
         </button>
         </div>

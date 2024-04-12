@@ -1,5 +1,5 @@
 const authReducer = (
-  state = { authData: null, loading: false, error: false ,blocked:false },
+  state = { authData: null, isPrivate: false ,loading: false, error: false ,blocked:false },
   action
 ) => {
   switch (action.type) {
@@ -48,9 +48,13 @@ case "UPDATING_FAIL":
       };
 
       case "UPDATING_PRIVACY_SUCCESS":
-      localStorage.setItem("profile", JSON.stringify({ ...action?.data }));
-      return { ...state, authData: action.data, loading: false, error: false, blocked: action.data.blocked  };
-    
+        return {
+          ...state,
+          user: action.data,
+          isPrivate: action.data.isPrivate, 
+          loading: false,
+          error: null,
+        };
       case "AUTH_SUCCESS_RESTART":
     localStorage.setItem("profile", JSON.stringify({ ...action?.data }));
     return { ...state, authData: action.data, loading: false, error: false };

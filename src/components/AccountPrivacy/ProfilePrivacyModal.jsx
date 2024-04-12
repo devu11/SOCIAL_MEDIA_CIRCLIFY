@@ -1,5 +1,3 @@
-// ProfilePrivacyModal.js
-
 import React, { useState, useEffect } from 'react';
 import "./ProfilePrivacyModal.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,6 +8,7 @@ function ProfilePrivacyModal({ onClose }) {
   const userId = useSelector(state => state.authReducer.authData?.user?._id);
   const [isPrivate, setIsPrivate] = useState(false);
   const [loading, setLoading] = useState(false);
+  
 
   useEffect(() => {
     setIsPrivate(userId ? localStorage.getItem(`privacy_${userId}`) === 'private' : false);
@@ -19,7 +18,7 @@ function ProfilePrivacyModal({ onClose }) {
     setLoading(true);
     try {
       const newPrivacy = isPrivate ? 'public' : 'private';
-      await dispatch(updateUserPrivacy(userId, { isPrivate: newPrivacy }));
+      await dispatch(updateUserPrivacy(newPrivacy)); // Update user privacy
       setIsPrivate(!isPrivate);
       localStorage.setItem(`privacy_${userId}`, newPrivacy);
     } catch (error) {
