@@ -1,20 +1,44 @@
-// UserProfileView.js
-
 import React, { useState, useEffect } from "react";
 import "./UserProfileView.css";
 import { useSelector } from "react-redux";
+import { addMessage } from "../../api/MessageRequest.js";
+import { useNavigate } from "react-router-dom";
 
 function UserProfileModal({ user, onClose }) {
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   const posts = useSelector((state) => state.postReducer.posts);
-  const userId = useSelector(state => state.authReducer.authData?.user?._id);
+  const userId = useSelector((state) => state.authReducer.authData?.user?._id);
+  const [newMessage, setNewMessage] = useState("");
+  const currentUser = useSelector((state) => state.authReducer.authData.user);
   const [isPrivate, setIsPrivate] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsPrivate(user.isPrivate);
-    setIsFollowing(user.followers.includes(userId) || user.following.includes(userId));
-  }, [user, userId]);
+    setIsFollowing(
+      user.followers.includes(currentUser._id) || user.following.includes(currentUser._id)
+    );
+  }, [user, currentUser]);
+
+
+  const handleSendMessage = async () => {
+    const message = {
+      senderId: currentUser._id,
+      text: newMessage,
+      receiverId: user._id,
+    };
+
+    try {
+      await addMessage(message);
+      setNewMessage("");
+      navigate('/chat')
+    } catch (error) {
+      console.error("Error sending message:", error);
+    }
+  };
+
+
 
   return (
     <div className="user-profile-modal">
@@ -56,26 +80,28 @@ function UserProfileModal({ user, onClose }) {
         ) : (
           <>
             {user.bio && <p>{user.bio}</p>}
+            <button   onClick={handleSendMessage} >message</button>
             {!isPrivate || isFollowing ? (
               <div className="user-posts">
                 <h3 style={{ color: "black" }}>Posts</h3>
-                {posts.map((post, index) => (
-                  post.userId === user._id && (
-                    <div key={index} className="post">
-                      <img
-                        src={
-                          post.image
-                            ? process.env.REACT_APP_PUBLIC_FOLDER + post.image
-                            : ""
-                        }
-                        alt=""
-                      />
-                      {post.video && (
-                        <video src={serverPublic + post.video} controls />
-                      )}
-                    </div>
-                  )
-                ))}
+                {posts.map(
+                  (post, index) =>
+                    post.userId === user._id && (
+                      <div key={index} className="post">
+                        <img
+                          src={
+                            post.image
+                              ? process.env.REACT_APP_PUBLIC_FOLDER + post.image
+                              : ""
+                          }
+                          alt=""
+                        />
+                        {post.video && (
+                          <video src={serverPublic + post.video} controls />
+                        )}
+                      </div>
+                    )
+                )}
               </div>
             ) : (
               <p>This account is private.</p>

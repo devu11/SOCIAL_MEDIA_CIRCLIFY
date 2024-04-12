@@ -53,6 +53,7 @@ function LogoSearch() {
             {searchResults.length > 0 ? (
               searchResults.map((user) => (
                 <div style={{ marginBottom: '12px' }}>
+                  
                  <User key={user._id} person={user} />
                 </div>
               ))

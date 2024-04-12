@@ -52,24 +52,26 @@ function Posts() {
               />
             ) : null
           )}
-      <div className="paginationUsers">
-        <button
-          onClick={() => paginate(currentPage - 1)}
-          disabled={currentPage === 1}
-        >
-          Prev <FaLessThan />
-        </button>
-        <button
-          onClick={() => paginate(currentPage + 1)}
-          disabled={
-            currentPage === Math.ceil(filteredPosts.length / postsPerPage)
-          }
-        >
-          <FaGreaterThan /> Next
-        </button>
-      </div>
+      {filteredPosts.length > 0 && ( // Conditionally render pagination buttons
+        <div className="paginationUsers">
+          <button
+            onClick={() => paginate(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            Prev <FaLessThan />
+          </button>
+          <button
+            onClick={() => paginate(currentPage + 1)}
+            disabled={
+              currentPage === Math.ceil(filteredPosts.length / postsPerPage)
+            }
+          >
+            <FaGreaterThan /> Next
+          </button>
+        </div>
+      )}
     </div>
-  );
+  );  
 }
 
 export default Posts;

@@ -51,7 +51,8 @@ function Chat() {
        const updatedNotifications = [...notifications, data.message];
        setNotifications(updatedNotifications);
        localStorage.setItem('notifications', JSON.stringify(updatedNotifications));
-    });
+   
+      });
    
     return () => {
        socket.current.disconnect();

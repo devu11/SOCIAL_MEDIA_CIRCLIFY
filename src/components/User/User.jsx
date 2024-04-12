@@ -53,6 +53,7 @@ function User({ person }) {
             <span>{person.username}</span>
           </div>
         </div>
+       
         <button
           className={
             following ? "button fc-button UnfollowButton" : "button fc-button"
