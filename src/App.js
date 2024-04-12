@@ -11,7 +11,7 @@ import AdminUserManagement from "./components/Admin/AdminUserManagement/AdminUse
 import Chat from "./Pages/Chat/Chat";
 import Otp from "./Pages/Otp/Otp";
 import Notifications from "./Pages/Notifications.jsx/Notifications";
-
+import NotFound from "./components/404Error/NotFound";
 
 
 function App() {
@@ -58,7 +58,7 @@ function App() {
 
 {/* <Route path="/notification" element={<Notifications/>}/> */}
 
-
+<Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );
