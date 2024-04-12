@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { likedPost, updatePost, addComment  } from "../../api/PostRequest";
 import { deletePost } from "../../actions/PostAction";
 import Swal from "sweetalert2";
+import PostLikes from "../PostLikeUsers/PostLikeUsers";
 
 function Post({ data, id, onDelete }) {
   const { user } = useSelector((state) => state.authReducer.authData);
@@ -23,8 +24,12 @@ function Post({ data, id, onDelete }) {
     const storedLikes = localStorage.getItem(`post_likes_${id}`);
     return storedLikes ? JSON.parse(storedLikes) : data?.likes.length || 0;
   });
+  
   const [description, setDescription] = useState(data?.desc || "");
   const [comments, setComments] = useState([]);
+  const [showLikersModal, setShowLikersModal] = useState(false);
+
+
 
   useEffect(() => {
     const storedComments = localStorage.getItem(`post_comments_${id}`);
@@ -55,6 +60,13 @@ function Post({ data, id, onDelete }) {
     );
   };
 
+  const handleLikesClick = () => {
+    setShowLikersModal(true);
+ };
+
+ const closeLikersModal = () => {
+    setShowLikersModal(false);
+ };
   
 
   const handleEdit = () => {
@@ -119,7 +131,7 @@ function Post({ data, id, onDelete }) {
       title: "Add Comment",
       html: `
         <input id="swal-comment" class="swal2-input" placeholder="Your comment">
-        <span style="color: gray;">Comment by: ${user.username}</span>
+        <span style="color: gray;">Comment by: ${user.firstname} ${user.lastname}</span>
       `,
       showCancelButton: true,
       confirmButtonText: "Comment",
@@ -132,7 +144,7 @@ function Post({ data, id, onDelete }) {
         }
         try {
           await addComment(data._id, user._id, comment); 
-          const newComment = { username: user.username, comment };
+          const newComment = { username: user.firstname, comment };
           setComments((prevComments) => [...prevComments, newComment]);
           saveCommentsToLocalStorage([...comments, newComment]);
           return true;
@@ -171,7 +183,6 @@ function Post({ data, id, onDelete }) {
 
   return (
     <div className="Post">
- {console.log("Data:", data)}
 {/* <div className="user-profile">
         <img
           src={
@@ -212,7 +223,7 @@ function Post({ data, id, onDelete }) {
         <button onClick={handleDelete} className="deleteBtn">🗑️</button>
       </div>
 
-      <span style={{ color: "var(--gray)", fontSize: "15px" }}>
+      <span style={{ color: "var(--gray)", fontSize: "15px", cursor: "pointer" }} onClick={handleLikesClick}>
         {likes}likes
       </span>
 
@@ -234,6 +245,11 @@ function Post({ data, id, onDelete }) {
           </div>
         ))}
       </div>
+
+      {showLikersModal && (
+        <PostLikes likers={data.likes} onClose={closeLikersModal} />
+      )}
+
     </div>
   );
 }

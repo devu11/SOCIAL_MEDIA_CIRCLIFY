@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { getUser } from "../../api/UserRequest";
-import './Conversation.css'
+import { format } from "timeago.js";
+import "./Conversation.css";
 
-const Conversation = ({ data, currentUserId, onlineUsers }) => {
+const Conversation = ({ data, currentUserId, onlineUsers, lastMessage }) => {
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
@@ -20,7 +21,7 @@ const Conversation = ({ data, currentUserId, onlineUsers }) => {
     fetchUserData();
   }, [data]);
 
-  const isOnline = userData && onlineUsers.some(user => user.userId === userData._id);
+  const isOnline = userData && onlineUsers.some((user) => user.userId === userData._id);
 
   return (
     <>
@@ -40,10 +41,11 @@ const Conversation = ({ data, currentUserId, onlineUsers }) => {
                 style={{ width: "50px", height: "50px" }}
               />
               <div className="name1" style={{ fontSize: "0.8rem" }}>
-                <span>
+                <span style={{ fontWeight: "bold" }}>
                   {userData.firstname} {userData.lastname}
-                </span><br></br>
-                <span>{isOnline ? "Online" : "Offline"}</span> 
+                </span>
+                <br />
+                <span>{isOnline ? "Online" : "Offline"}</span>
               </div>
             </>
           ) : (
@@ -60,11 +62,17 @@ const Conversation = ({ data, currentUserId, onlineUsers }) => {
             </>
           )}
         </div>
+        <div className="last-message">
+          {lastMessage && (
+            <>
+            
+              <span>new message:      {lastMessage.text}</span>
+              <span>{format(lastMessage.timestamp)}</span> {/* Format timestamp using timeago.js */}
+            </>
+          )}
+        </div>
       </div>
-      <hr
-        className="hr"
-        style={{ width: "85%", border: "0.1px solid #ececec" }}
-      />
+      <hr className="hr" style={{ width: "85%", border: "0.1px solid #ececec" }} />
     </>
   );
 };

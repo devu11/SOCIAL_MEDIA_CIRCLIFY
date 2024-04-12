@@ -3,3 +3,13 @@
     flex-direction: column;
     gap: 1rem ;
 }
+.paginationUsers {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Adjust the gap size as needed */
+   
+   }
+   .paginationUsers button{
+    border: none;
+    background: none;
+   }

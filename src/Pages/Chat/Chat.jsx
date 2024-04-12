@@ -1,5 +1,4 @@
-// Chat.js
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./Chat.css";
 import LogoSearch from "../../components/logoSearch/LogoSearch";
 import { useSelector } from "react-redux";
@@ -23,6 +22,7 @@ function Chat() {
   const [receiveMessage, setReceiveMessage] = useState(null);
   const [followedUsers, setFollowedUsers] = useState([]);
   const [notifications, setNotifications] = useState([]);
+  const [lastMessages, setLastMessages] = useState({});
   const socket = useRef();
 
   useEffect(() => {
@@ -37,43 +37,52 @@ function Chat() {
     fetchFollowedUsers();
   }, [user._id]);
 
-  
-
-useEffect(() => {
-  const storedNotifications = JSON.parse(localStorage.getItem('notifications')) || [];
-  setNotifications(storedNotifications);
- 
-  socket.current = io("https://circlify.shop");
-  socket.current.emit("new-user-add", user._id);
-  socket.current.on("get-users", (users) => {
-     setOnlineUsers(users);
-  });
- 
-  socket.current.on("receive-notification", (data) => {
-     const updatedNotifications = [...notifications, data.message];
-     setNotifications(updatedNotifications);
-     localStorage.setItem('notifications', JSON.stringify(updatedNotifications));
-  });
- 
-  
-  return () => {
-     socket.current.disconnect();
-  };
- }, [user]);
- 
+  useEffect(() => {
+    const storedNotifications = JSON.parse(localStorage.getItem('notifications')) || [];
+    setNotifications(storedNotifications);
+   
+    socket.current = io("https://circlify.shop");
+    socket.current.emit("new-user-add", user._id);
+    socket.current.on("get-users", (users) => {
+       setOnlineUsers(users);
+    });
+   
+    socket.current.on("receive-notification", (data) => {
+       const updatedNotifications = [...notifications, data.message];
+       setNotifications(updatedNotifications);
+       localStorage.setItem('notifications', JSON.stringify(updatedNotifications));
+    });
+   
+    return () => {
+       socket.current.disconnect();
+    };
+  }, [user]);
+   
   useEffect(() => {
     socket.current.on("receive-message", (data) => {
       setReceiveMessage(data);
+   
+      setLastMessages((prevMessages) => ({
+        ...prevMessages,
+        [data.chatId]: data,
+      }));
     });
   }, []);
-  
-   
-   
+
   useEffect(() => {
     const getChats = async () => {
       try {
         const { data } = await userChats(user._id);
-        setChats(data);
+        const sortedChats = data.sort(
+          (a, b) => new Date(b.lastMessage.timestamp) - new Date(a.lastMessage.timestamp)
+        );
+        setChats(sortedChats);
+        // Initialize last messages for each conversation
+        const initialLastMessages = {};
+        data.forEach((chat) => {
+          initialLastMessages[chat._id] = chat.lastMessage;
+        });
+        setLastMessages(initialLastMessages);
       } catch (error) {
         console.log("Chat error: ", error);
       }
@@ -81,49 +90,39 @@ useEffect(() => {
     getChats();
   }, [user]);
 
-   const handleSendMessage = (message) => {
+  const handleSendMessage = (message) => {
     socket.current.emit("send-message", message);
+    // Update the last message for the conversation
+    setLastMessages((prevMessages) => ({
+      ...prevMessages,
+      [message.chatId]: message,
+    }));
   };
 
   return (
     <div className="Chat">
       <div className="Left-side-chat">
-        <LogoSearch />
-        {/* <div className="notifications">
-          <ul>
-          {notifications.map((notification, index) => (
-    <div key={index} className="notification">
-      {notification}
-    </div>
-  ))}
-          </ul>
-       
-        </div> */}
-       
+        <LogoSearch setCurrentChat={setCurrentChat} />
         <div className="Chat-container">
           <h2>Chats</h2>
           <div className="Chat-list">
             {followedUsers.map((user) => (
-              <div
-                onClick={() => setCurrentChat(user)}
-                key={user._id}
-              >
+              <div key={user._id} onClick={() => setCurrentChat(user)}>
                 <Conversation
                   data={user}
                   currentUserId={user._id}
                   onlineUsers={onlineUsers}
+                  lastMessage={lastMessages[user._id]}
                 />
               </div>
             ))}
             {chats.map((chat) => (
-              <div
-                onClick={() => setCurrentChat(chat)}
-                key={chat._id}
-              >
+              <div key={chat._id} onClick={() => setCurrentChat(chat)}>
                 <Conversation
                   data={chat}
                   currentUserId={user._id}
                   onlineUsers={onlineUsers}
+                  lastMessage={lastMessages[user._id]}
                 />
               </div>
             ))}
@@ -157,3 +156,4 @@ useEffect(() => {
 }
 
 export default Chat;
+

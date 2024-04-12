@@ -2,10 +2,10 @@ import * as PostApi from "../api/PostRequest.js"
 
 
 
-export const getTimelinePosts = (userId) => async (dispatch) => {
+export const getTimelinePosts = (userId, page, limit) => async (dispatch) => {
   dispatch({ type: "RETREIVING_START" }); 
   try {
-    const { data } = await PostApi.getTimelinePosts(userId);
+    const { data } = await PostApi.getTimelinePosts(userId , { page, limit });
     dispatch({ type: "RETREIVING_SUCCESS", data: data });
   } catch (error) {
     dispatch({ type: "RETREIVING_FAIL" }); 

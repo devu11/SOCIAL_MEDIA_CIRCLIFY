@@ -50,3 +50,5 @@ export const getUsersBySearchQuery = async (query) => {
  };
  
  export const updateUserPrivacy = (id, data) => API.put(`/user/${id}/privacy`, data);
+
+ export const getFollowersUsers =(userId)=>API.get(`/user/${userId}/followers`)

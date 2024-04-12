@@ -4,7 +4,7 @@ import { UilSearch } from "@iconscout/react-unicons";
 import "./LogoSearch.css";
 import User from "../User/User.jsx";
 import { getUsersBySearchQuery } from "../../api/UserRequest.js";
-import Swal from 'sweetalert2'; // Import SweetAlert2
+import Swal from 'sweetalert2';
 
 function LogoSearch() {
  const [searchQuery, setSearchQuery] = useState("");
@@ -28,6 +28,9 @@ function LogoSearch() {
  const closeModal = () => {
     setShowModal(false);
  };
+
+
+
 
  return (
     <div className="LogoSearch">

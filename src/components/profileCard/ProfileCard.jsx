@@ -1,11 +1,13 @@
-import React, { useRef } from "react";
+import React, { useRef ,useState,useEffect} from "react";
 import "./ProfileCard.css";
-// import camera from "../../img/camera.jpg"
-
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { uploadImage } from "../../actions/uploadAction";
 import { updateUser } from "../../actions/userAction";
+import FollowingModal from "../FollowingModal/FollowingModal";
+import { getFollowedUsers } from "../../api/UserRequest";
+ 
+
 
 function ProfileCard({location}) {
   const { user } = useSelector((state) => state.authReducer.authData)|| {};
@@ -14,6 +16,8 @@ function ProfileCard({location}) {
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   const fileInputRefCover = useRef(null);
   const fileInputRefProfile = useRef(null);
+  const [showFollowingModal, setShowFollowingModal] = useState(false);
+  const [followingUsers, setFollowingUsers] = useState([]);
 
   if (!user || user === null  || !user._id) {
     return null;
@@ -50,6 +54,16 @@ function ProfileCard({location}) {
 
   }
     
+  };
+
+  const openFollowingModal = async () => {
+    setShowFollowingModal(true);
+    const followingResponse = await getFollowedUsers(user._id);
+    setFollowingUsers(followingResponse.data);
+  };
+
+  const closeFollowingModal = () => {
+    setShowFollowingModal(false);
   };
 
   return (
@@ -96,10 +110,10 @@ function ProfileCard({location}) {
       <div className="FollowStatus">
         <hr />
         <div>
-          <div className="follow">
+          <div className="follow"  onClick={openFollowingModal} style={{cursor:"pointer"}}>
             <span>{user.following.length}</span>
             <span>Following</span>
-          </div>
+          </div> 
           <div className="vl"></div>
           <div className="follow">
             <span>{user.followers.length}</span>
@@ -128,6 +142,7 @@ function ProfileCard({location}) {
           <Link style={{textDecoration:"none" , color:"inherit"}} to={`/profile/${user._id}`}>My Profile</Link>
         </span>
       )}
+      {showFollowingModal && <FollowingModal onClose={closeFollowingModal} followingUsers={followingUsers} />}
     </div>
   );
 }

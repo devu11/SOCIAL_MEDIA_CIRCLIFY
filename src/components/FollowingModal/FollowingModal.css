@@ -1,0 +1,72 @@
+.FollowingModalBackground {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .FollowingModal {
+    background-color: white;
+    padding: 10px;
+    border-radius: 8px;
+    width: 500px;
+    max-height: 500px; 
+    overflow-y: auto;
+  }
+  
+  .FollowingModal h2 {
+    margin-left: 200px;
+  }
+  
+  .close-btn {
+    color: rgb(231, 10, 10);
+    border: none;
+    cursor: pointer;
+    margin-left: 460px;
+    background: none;
+    transform: translateY(-60px);
+    font-size: larger;
+   
+  }
+  
+  .following-list {
+    margin-top: 20px;
+  }
+  
+  .following-user {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+  }
+  
+  .following-user img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .user-details {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .user-details .username {
+    margin-top: 5px; 
+  }
+  
+  .following-user button {
+    background-color: #2d85d2;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: auto; 
+  }
+  
