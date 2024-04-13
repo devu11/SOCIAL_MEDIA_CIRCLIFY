@@ -58,7 +58,7 @@ function Posts() {
             onClick={() => paginate(currentPage - 1)}
             disabled={currentPage === 1}
           >
-            Prev <FaLessThan />
+             <FaLessThan /> Prev
           </button>
           <button
             onClick={() => paginate(currentPage + 1)}
@@ -66,7 +66,7 @@ function Posts() {
               currentPage === Math.ceil(filteredPosts.length / postsPerPage)
             }
           >
-            <FaGreaterThan /> Next
+           Next  <FaGreaterThan />
           </button>
         </div>
       )}
