@@ -305,7 +305,7 @@ function Auth() {
             {loading ? "Loading..." : isSignUp ? "Signup" : "Login"}
           </button>
 
-          <GoogleLogin
+          {/* <GoogleLogin
   clientId="463018507929-f58al925caana4fdnt17cur5fnvflnnq.apps.googleusercontent.com"
   onSuccess={handleGoogleSignInSuccess}
   onFailure={handleGoogleSignInFailure}
@@ -332,7 +332,7 @@ function Auth() {
       Sign in with Google
     </button>
   )}
-/>
+/> */}
 
         </form>
       </div>
