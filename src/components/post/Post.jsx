@@ -5,7 +5,8 @@ import Share from "../../img/share.png";
 import Heart from "../../img/like.png";
 import NotLike from "../../img/notlike.png";
 import { useDispatch, useSelector } from "react-redux";
-import { likedPost, updatePost, addComment  } from "../../api/PostRequest";
+import { likedPost, updatePost, addComment } from "../../api/PostRequest";
+import { deleteComment } from "../../actions/PostAction";
 import { deletePost } from "../../actions/PostAction";
 import Swal from "sweetalert2";
 import PostLikes from "../PostLikeUsers/PostLikeUsers";
@@ -115,7 +116,7 @@ function Post({ data, id, onDelete }) {
           title: "Deleted!",
           text: "Your post has been deleted.",
           icon: "success",
-          timer: 500, // Display the toast message for 3 seconds
+          timer: 500, 
           timerProgressBar: true,
         }).then(() => {
           window.location.reload();
@@ -171,6 +172,27 @@ function Post({ data, id, onDelete }) {
     });
   };
   
+  const handleDeleteComment = (commentId) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteComment(data._id, commentId));
+        setComments((prevComments) => prevComments.filter(comment => comment._id !== commentId));
+        saveCommentsToLocalStorage(comments.filter(comment => comment._id !== commentId));
+      }
+    });
+  };
+
+
+
+
 
 
 
@@ -224,7 +246,7 @@ function Post({ data, id, onDelete }) {
       </div>
 
       <span style={{ color: "var(--gray)", fontSize: "15px", cursor: "pointer" }} onClick={handleLikesClick}>
-        {likes}likes
+        {likes} likes
       </span>
 
       <div className="details">
@@ -241,6 +263,7 @@ function Post({ data, id, onDelete }) {
           <div key={index} className="comment">
             <p>
               <b>{comment.username}</b>: {comment.comment}
+              <button onClick={() => handleDeleteComment(comment._id)} className="commentDeletebtn" style={{color:"black"}}>🗑️</button>
             </p>
           </div>
         ))}

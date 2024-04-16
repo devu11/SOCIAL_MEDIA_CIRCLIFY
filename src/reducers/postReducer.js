@@ -130,6 +130,24 @@ case "UPLOAD_SUCCESS":
         case "UPLOAD_VIDEO_FAILURE":
           return { ...state, uploadingVideo: false, error: true };
           
+          case "DELETE_COMMENT_SUCCESS":
+            const updatedComments = state.posts.map((post) => {
+              if (post._id === action.payload.postId) {
+                return {
+                  ...post,
+                  comments: post.comments.filter(
+                    (comment) => comment._id !== action.payload.commentId
+                  ),
+                };
+              }
+              return post;
+            });
+            return {
+              ...state,
+              posts: updatedComments,
+              loading: false,
+            };
+
 
       
         default: 

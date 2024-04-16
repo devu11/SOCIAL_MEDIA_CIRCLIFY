@@ -99,3 +99,28 @@ export const addComment = (postId, userId, comment) => async (dispatch) => {
     dispatch(addCommentFailure());
   }
 };
+
+
+export const deleteCommentRequest = () => ({
+  type: "DELETE_COMMENT_REQUEST",
+});
+
+export const deleteCommentSuccess = (postId, commentId) => ({
+  type: "DELETE_COMMENT_SUCCESS",
+  payload: { postId, commentId },
+});
+
+export const deleteCommentFailure = () => ({
+  type: "DELETE_COMMENT_FAILURE",
+});
+
+export const deleteComment = (postId, commentId) => async (dispatch) => {
+  dispatch(deleteCommentRequest());
+  try {
+    await PostApi.deleteComment(postId, commentId);
+    dispatch(deleteCommentSuccess(postId, commentId));
+  } catch (error) {
+    console.error("Error deleting comment:", error);
+    dispatch(deleteCommentFailure());
+  }
+};

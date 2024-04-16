@@ -13,3 +13,6 @@ export const deletePost = (postId, userId) =>
   API.delete(`/post/${postId}`, { data: { userId } });
 export const addComment = (postId, userId, comment) =>
   API.post(`/post/${postId}/comment`, { userId, comment });
+
+  export const deleteComment = (postId, commentId) =>
+  API.delete(`/post/${postId}/comment/${commentId}`);

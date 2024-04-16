@@ -56,26 +56,26 @@ color: black;
     font-size: 10px; 
 }
 .custom-swal-popup {
-    margin-top: 10px; /* Adjust this value to your desired distance from the top */
+    margin-top: 10px; 
 }
 
 .custom-swal-content {
-    margin-top: 10px; /* Adjust this value to increase or decrease the space between title and input */
+    margin-top: 10px; 
 }
 .custom-swal-popup {
-    background-color: #f0f0f0; /* Change background color */
+    background-color: #f0f0f0; 
 }
 
 .custom-swal-content {
-    font-size: 10px; /* Adjust font size of comment text */
+    font-size: 10px; 
 }
 
 .swal2-comment-by {
-    color: gray; /* Change color of comment by text */
+    color: gray; 
 }
 
 .custom-swal-confirm-button {
-    background-color: #3085d6; /* Change background color of confirm button */
+    background-color: #3085d6; 
     color: white; 
 }
 
@@ -122,4 +122,15 @@ color: black;
     margin-bottom: 0;
     font-weight: bold; 
   }
-  
+  .commentDeletebtn{
+    background: none;
+    border: none;
+    
+  }
+
+  /* .comments{
+    width: 680px;
+    border-radius: 5px;
+    background: rgb(228, 213, 226);
+   
+  } */
