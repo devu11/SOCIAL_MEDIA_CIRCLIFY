@@ -67,14 +67,14 @@ function InfoCard() {
         <span>
           <b>Status</b>
         </span>
-        <span>{profileUser.relationship}</span>
+        <span> {profileUser.relationship}</span>
       </div>
 
       <div className="info">
         <span>
           <b>Lives In</b>
         </span>
-        <span>{profileUser.livesin}</span>
+        <span> {profileUser.livesin}</span>
       </div>
 
       <div className="info">
